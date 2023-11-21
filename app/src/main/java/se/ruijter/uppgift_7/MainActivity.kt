@@ -32,6 +32,7 @@ import se.ruijter.uppgift_7.ui.theme.Uppgift7Theme
  * Text under med siffra
  * Två knappar bredvid varandra: "Plus" som ökar siffran och "Minus" som minskar siffran
  * Knapp under "Reset" som nollställer
+ * https://github.com/HendrikRuijter/uppgift-7/tree/main
  */
 
 class MainActivity : ComponentActivity() {
