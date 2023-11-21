@@ -1,5 +1,6 @@
 package se.ruijter.uppgift_7
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,9 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import se.ruijter.uppgift_7.ui.theme.Uppgift7Theme
 
 /**
@@ -69,19 +68,17 @@ private fun DecoupledStateApp(header: String, modifier: Modifier = Modifier) {
 
 @Composable
 private fun StateHeader(header: String, counterState: Int) {
-    val presentationSize = 32.sp
-
     @Composable
-    fun TextElement(description: String, size: TextUnit) {
+    fun TextElement(description: String) {
         Text(
             text = description,
-            fontSize = size
+            style = MaterialTheme.typography.headlineMedium,
         )
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        TextElement(description = header, size = presentationSize)
-        TextElement(description = "$counterState", size = presentationSize)
+        TextElement(description = header)
+        TextElement(description = "$counterState")
     }
 }
 
@@ -141,10 +138,22 @@ private fun StateApp(header: String, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    heightDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "Dark"
+)
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    heightDp = 320,
+    name = "Light")
 @Composable
 fun DefaultPreview() {
     Uppgift7Theme {
-            StateApp("Preview")
+        StateApp("Preview")
+        // DecoupledStateApp(header = "Start")
     }
 }
