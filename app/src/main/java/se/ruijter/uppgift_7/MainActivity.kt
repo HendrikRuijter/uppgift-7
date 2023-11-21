@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import se.ruijter.uppgift_7.ui.theme.Uppgift7Theme
@@ -35,24 +36,27 @@ import se.ruijter.uppgift_7.ui.theme.Uppgift7Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val title = "Start"
+
         super.onCreate(savedInstanceState)
         setContent {
             Uppgift7Theme {
-                // StateApp("Start", modifier = Modifier.fillMaxSize())
-                DecoupledStateApp(header = "Start", modifier = Modifier.fillMaxSize())
+                // StateApp(header = title, modifier = Modifier.fillMaxSize())
+                DecoupledStateApp(header = title, modifier = Modifier.fillMaxSize())
             }
         }
     }
 }
 
 /**
- * Stateless fun with callback
+ * Stateful fun with callback
  * https://developer.android.com/jetpack/compose/state#state-hoisting
  */
+@Suppress("SameParameterValue")
 @Composable
 private fun DecoupledStateApp(header: String, modifier: Modifier = Modifier) {
-//fun Decouple(header: String) {
     var counterState : Int by rememberSaveable { mutableStateOf(0) }
+
     Surface(
         modifier = modifier,
         color = MaterialTheme.colorScheme.background
@@ -64,15 +68,19 @@ private fun DecoupledStateApp(header: String, modifier: Modifier = Modifier) {
 
 @Composable
 private fun StateHeader(header: String, counterState: Int) {
+    val presentationSize = 32.sp
+
+    @Composable
+    fun TextElement(description: String, size: TextUnit) {
+        Text(
+            text = description,
+            fontSize = size
+        )
+    }
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = header,
-            fontSize = 32.sp
-        )
-        Text(
-            text = "$counterState",
-            fontSize = 32.sp
-        )
+        TextElement(description = header, size = presentationSize)
+        TextElement(description = "$counterState", size = presentationSize)
     }
 }
 
@@ -102,6 +110,7 @@ private fun StateChange(counterState: Int, onValueChange: (Int) -> Unit) {
  * Stateful fun
  * https://developer.android.com/jetpack/compose/state#state-in-composables
  */
+@Suppress("SameParameterValue")
 @Composable
 private fun StateApp(header: String, modifier: Modifier = Modifier) {
     var counterState : Int by remember { mutableStateOf(0) }
